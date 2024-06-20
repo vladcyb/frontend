@@ -7,19 +7,18 @@ const rl = readline.createInterface({
   input: fileStream,
 })
 
-let result = ''
-
-function isValid(str) {
+function isValid(numb, stringSize) {
   let nestCount = 0
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === '0') {
-      nestCount++
-    } else {
+  for (let i = 0; i < stringSize; i++) {
+    if (numb % 2) {
       nestCount--
       if (nestCount < 0) {
         return false
       }
+    } else {
+      nestCount++
     }
+    numb = numb >> 1
   }
   return nestCount === 0
 }
@@ -28,11 +27,14 @@ rl.on('line', (line) => {
   const n = parseInt(line)
   const stringSize = 2 * n
 
-  for (let i = Math.pow(2, n) - 1; i < Math.pow(2, stringSize); i++) {
-    const binary = i.toString(2).padStart(stringSize, '0')
-    if (isValid(binary)) {
-      const variant = binary.replace(/0/g, '(').replace(/1/g, ')')
-      process.stdout.write(variant + '\r\n')
+  if (n === 0) {
+    process.stdout.write('')
+    return
+  }
+
+  for (let i = Math.pow(2, stringSize) - 1; i > Math.pow(2, n) - 2; i--) {
+    if (isValid(i, stringSize)) {
+      process.stdout.write(i.toString(2).replace(/1/g, '(').replace(/0/g, ')') + '\r\n')
     }
   }
 })
