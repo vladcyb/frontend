@@ -9,21 +9,21 @@ const rl = readline.createInterface({
 
 let lines = []
 
-function areAnagrams(firstArr, secondArr) {
-  if (firstArr.length !== secondArr.length) {
+function areAnagrams(firstString, secondString) {
+  if (firstString.length !== secondString.length) {
     return false
   }
 
   const firstMap = new Map()
   const secondMap = new Map()
 
-  const { length } = firstArr
+  const { length } = firstString
 
   for (let i = 0; i < length; i++) {
-    const count1 = firstMap.get(firstArr[i])
-    firstMap.set(firstArr[i], (count1 ?? 0) + 1)
-    const count2 = secondMap.get(secondArr[i])
-    secondMap.set(secondArr[i], (count2 ?? 0) + 1)
+    let count = firstMap.get(firstString[i])
+    firstMap.set(firstString[i], (count ?? 0) + 1)
+    count = secondMap.get(secondString[i])
+    secondMap.set(secondString[i], (count ?? 0) + 1)
   }
 
   for (const [key] of firstMap) {
@@ -39,6 +39,5 @@ rl.on('line', (line) => {
   lines.push(line)
 }).on('close', () => {
   const [first, second] = lines
-  const [firstArr, secondArr] = [Array.from(first), Array.from(second)]
-  process.stdout.write(areAnagrams(firstArr, secondArr) ? '1' : '0')
+  process.stdout.write(areAnagrams(first, second) ? '1' : '0')
 })
