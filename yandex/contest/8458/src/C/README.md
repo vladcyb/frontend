@@ -96,8 +96,8 @@
 <table>
     <thead>
         <tr>
-            <td>Input</td>    
-            <td>Output</td>    
+            <th>Input</th>    
+            <th>Output</th>    
         </tr>
     </thead>
     <tr>
@@ -122,8 +122,8 @@
 <table>
     <thead>
         <tr>
-            <td>Input</td>    
-            <td>Output</td>    
+            <th>Input</th>    
+            <th>Output</th>    
         </tr>
     </thead>
     <tr>
