@@ -7,34 +7,29 @@ const rl = readline.createInterface({
   input: fileStream,
 })
 
-function isValid(numb, stringSize) {
-  let nestCount = 0
-  for (let i = 0; i < stringSize; i++) {
-    if (numb % 2) {
-      nestCount--
-      if (nestCount < 0) {
-        return false
-      }
-    } else {
-      nestCount++
+function generateParentheses(n) {
+  function addToSequence(current, openCount, closeCount) {
+    if (current.length === 2 * n) {
+      console.log(current)
+      return
     }
-    numb = numb >> 1
+
+    if (openCount < n) {
+      addToSequence(current + '(', openCount + 1, closeCount)
+    }
+
+    if (closeCount < openCount) {
+      addToSequence(current + ')', openCount, closeCount + 1)
+    }
   }
-  return nestCount === 0
+
+  addToSequence('', 0, 0)
 }
 
 rl.on('line', (line) => {
   const n = parseInt(line)
-  const stringSize = 2 * n
 
-  if (n === 0) {
-    process.stdout.write('')
-    return
-  }
+  generateParentheses(n)
 
-  for (let i = Math.pow(2, stringSize) - 1; i > Math.pow(2, n) - 2; i--) {
-    if (isValid(i, stringSize)) {
-      process.stdout.write(i.toString(2).replace(/1/g, '(').replace(/0/g, ')') + '\r\n')
-    }
-  }
+  rl.close()
 })
